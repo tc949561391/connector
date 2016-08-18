@@ -7,5 +7,8 @@
     "password": "tristan201314",
     "host": "www.moondust.cc",
     "port": 21717
+  },
+  "redis": {
+
   }
 }
