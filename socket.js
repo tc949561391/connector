@@ -1,27 +1,40 @@
 /**
  * Created by Tristan on 16/8/18.
  */
+var validate = require('./socket/TokenValidate')
 function doSocket(wss) {
-    var i=0;
-    wss.on('connection',function (socket) {
+    wss.on('connection', function (socket) {
+
+
+        var isauth = false;
+        isauth = validate(socket)
+        console.log(socket.readyState)
+
+        socket.send('you join')
+//["CONNECTING", "OPEN", "CLOSING", "CLOSED"]
+
+
+
+
+
         socket.on('message', function (message) {
-            i++
-            console.log(i+"------------------"+message)
             broadcast(message)
         })
+
+
 
         socket.on('close', function (message) {
 
             console.log('close')
         })
 
-        socket.on('error',function (error) {
+        socket.on('error', function (error) {
 
         })
 
         console.log('connection')
 
-        socket.send('you join')
+
     })
 
     function broadcast(data) {
@@ -30,4 +43,4 @@ function doSocket(wss) {
         });
     }
 }
-module.exports=doSocket
+module.exports = doSocket
