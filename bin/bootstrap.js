@@ -29,8 +29,7 @@ const pug = new Pug({
 
 var server = http.createServer(app.callback())
 var wss = new WebSocketServer({server: server})
-new DoSocket(wss);
-
+DoSocket(wss);
 server.listen(config.bootstrap.port)
 
 

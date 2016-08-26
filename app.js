@@ -1,10 +1,12 @@
 var Koa = require('koa')
-var route = require('koa-route')
+var koa_router = require('koa-router');
+var rs=require('./source/router')
 var app = new Koa()
+var router=new koa_router()
 
+app.use(router.routes());
+app.use(router.allowedMethods());
 
-app.use(route.all('/getuser/:name', function *(name) {
-    this.render('index', {title: name})
-}))
+rs(router)
 
 module.exports = app
