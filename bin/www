@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+var WebsocketServer = require('ws').Server
+var socket=require('../socket')
+var config={
+    port:80
+}
+var wss = new WebsocketServer({
+    port: config.port||3000
+})
+socket.conn(wss)
+console.log('websocket server is booting at '+config.port||3000+'port')
