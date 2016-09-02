@@ -6,10 +6,24 @@
 var WebsocketServer = require('ws').Server
 var socket=require('../socket')
 var config={
-    port:80
+    port:8080
 }
 var wss = new WebsocketServer({
     port: config.port||3000
 })
 socket.conn(wss)
 console.log('websocket server is booting at '+config.port||3000+'port')
+var os = require('os');
+var IPv4,hostName;
+hostName=os.hostname();
+for(var i=0;i<os.networkInterfaces().以太网.length;i++){
+    if(os.networkInterfaces().以太网[i].family=='IPv4'){
+        IPv4=os.networkInterfaces().以太网[i].address;
+    }
+}
+
+var address={
+    host:hostName,
+    ip:IPv4
+}
+process.address=address
