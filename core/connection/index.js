@@ -2,7 +2,12 @@
  * Created by j0 on 2016/9/2.
  */
 var validater = require('../validate')
+var log=require('log4js').getLogger('connect')
+var onmessage=require('../onmessage')
+var onclose=require('../onclose')
+var onerror=require('../onerror')
 function doConnection(session) {
+    log.info('getconnected:'+session.upgradeReq.url)
     validater(session, function (err) {
         if (err) {
             console.log(err.message)
@@ -11,29 +16,13 @@ function doConnection(session) {
             return
         }
         session.on('message', function (message) {
-            var request
-            try {
-                request = JSON.parse(message);
-                console.log(message)
-                var response = {
-                    from: session.user.id,
-                    to: session.user.id,
-                    message: message
-                }
-                session.send(JSON.stringify(response))
-            } catch (err) {
-                session.send('错误的消息格式')
-            }
+            onmessage(message,session)
 
         })
 
-        session.on('close', function () {
-            session.send('close')
-        })
+        session.on('close', onclose)
 
-        session.on('error', function (err) {
-            session.send(err.message)
-        })
+        session.on('error', onerror)
     })
 }
 module.exports = doConnection

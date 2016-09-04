@@ -3,14 +3,15 @@
  */
 var redis = require('redis')
 var config = require('../../config')
+var log = require('log4js').getLogger('server-init')
 var redisConn = redis.createClient(config.redis.port, config.redis.host, {})
 redisConn.on('error', function () {
-    console.error('redis connnected error')
+    log.error('redis connnected error')
 })
 
 redisConn.on('connect', function () {
-        console.log('redis connected success')
+        log.info('redis connected success')
     }
 )
 
-module.exports=redisConn
+module.exports = redisConn

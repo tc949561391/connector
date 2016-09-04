@@ -15,8 +15,8 @@ function validater(session, callback) {
         callback(new Errors.AuthError(1050, 'access_token error'))
         return
     }
+
     validateModules.getUser(params.access_token, function (err, user) {
-        //
         if (err) {
             callback(err)
             return
@@ -24,8 +24,8 @@ function validater(session, callback) {
         if (!user){
             callback(new Errors.AuthError(1050, '无效的access_token'))
         }
+        session.id=user.id
         session.user=user
-        session.send(JSON.stringify(user)+'join')
         callback()
     })
 }

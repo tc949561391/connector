@@ -5,6 +5,9 @@ var config={
     redis:{
         host:"localhost",
         port:6379
+    },
+    server:{
+        port:8080
     }
 }
 

@@ -4,26 +4,56 @@
  * Module dependencies.
  */
 var WebsocketServer = require('ws').Server
-var socket=require('../socket')
-var config={
-    port:8080
-}
+var socket = require('../socket')
+var config = require('../config')
+
+
+//日志模块的配置
+var log4js = require('log4js')
+log4js.configure({
+    appenders: [
+        {type: 'console'}, //控制台输出
+        {
+            type: 'datefile', //文件输出
+            filename: 'logs/logger.log',
+            maxLogSize: 1024,
+            backups: 3,
+            category: 'normal',
+            layout: {type:'basic'},
+            pattern: '.yyyy-MM-dd',
+            alwaysIncludePattern: true
+        }
+    ],
+    levels: {
+        cheese: 'INFO'
+    }
+});
+
+
+
+
+var log = log4js.getLogger('server-init')
+
 var wss = new WebsocketServer({
-    port: config.port||3000
+    port: config.server.port || 3000
 })
 socket.conn(wss)
-console.log('websocket server is booting at '+config.port||3000+'port')
+log.info('websocket server is booting at ' + config.server.port || 3000 + 'port')
+
+
+//获取node运行服务器的内网hostname和ip地址
 var os = require('os');
-var IPv4,hostName;
-hostName=os.hostname();
-for(var i=0;i<os.networkInterfaces().以太网.length;i++){
-    if(os.networkInterfaces().以太网[i].family=='IPv4'){
-        IPv4=os.networkInterfaces().以太网[i].address;
+var IPv4, hostName;
+hostName = os.hostname();
+for (var i = 0; i < os.networkInterfaces().en0.length; i++) {
+    if (os.networkInterfaces().en0[i].family == 'IPv4') {
+        IPv4 = os.networkInterfaces().en0[i].address;
     }
 }
-
-var address={
-    host:hostName,
-    ip:IPv4
+log.info('hostname:' + hostName)
+log.info('ipv4:' + IPv4)
+var address = {
+    host: hostName,
+    ip: IPv4
 }
-process.address=address
+process.address = address
