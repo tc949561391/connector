@@ -7,7 +7,7 @@ var config={
         port:6379
     },
     server:{
-        port:8080
+        port:80
     }
 }
 

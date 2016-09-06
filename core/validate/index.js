@@ -11,6 +11,10 @@ function validater(session, callback) {
         callback(new Errors.AuthError(1044, 'access_token no found'))
         return
     }
+    if (!params.client_id){
+        callback(new Errors.AuthError(1048,'client_id not found'))
+        return
+    }
     if (params.access_token.length < 6) {
         callback(new Errors.AuthError(1050, 'access_token error'))
         return
@@ -23,8 +27,16 @@ function validater(session, callback) {
         }
         if (!user){
             callback(new Errors.AuthError(1050, '无效的access_token'))
+            return
         }
+
+        if (params.client_id!=user.clientId){
+            callback(new Errors.AuthError(1048,'client_id error'))
+            return
+        }
+
         session.id=user.id
+        session.clientId=user.clientId
         session.user=user
         callback()
     })

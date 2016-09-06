@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "hashmap": "^2.0.6",
     "log4js": "^0.6.38",
     "redis": "^2.6.2",
     "ws": "^1.1.1"

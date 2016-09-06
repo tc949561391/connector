@@ -1,6 +1,7 @@
 {
   "authError": {
     "1044": "没有access_token",
-    "1050":"access_token错误"
+    "1050":"access_token错误",
+    "1048":"client信息错误"
   }
 }

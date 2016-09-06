@@ -17,7 +17,6 @@ function getAccessToken(bearerToken, callback) {
             if (err) return callback(err);
 
             if (!token) return callback();
-            console.log('getAccessToken:' + token)
 
             callback(null, {
                 accessToken: token.accessToken,

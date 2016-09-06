@@ -45,9 +45,9 @@ log.info('websocket server is booting at ' + config.server.port || 3000 + 'port'
 var os = require('os');
 var IPv4, hostName;
 hostName = os.hostname();
-for (var i = 0; i < os.networkInterfaces().en0.length; i++) {
-    if (os.networkInterfaces().en0[i].family == 'IPv4') {
-        IPv4 = os.networkInterfaces().en0[i].address;
+for (var i = 0; i < os.networkInterfaces().以太网.length; i++) {
+    if (os.networkInterfaces().以太网[i].family == 'IPv4') {
+        IPv4 = os.networkInterfaces().以太网[i].address;
     }
 }
 log.info('hostname:' + hostName)

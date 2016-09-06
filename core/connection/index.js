@@ -6,15 +6,17 @@ var log=require('log4js').getLogger('connect')
 var onmessage=require('../onmessage')
 var onclose=require('../onclose')
 var onerror=require('../onerror')
+var sessions=require('../sessions')
 function doConnection(session) {
     log.info('getconnected:'+session.upgradeReq.url)
     validater(session, function (err) {
         if (err) {
-            console.log(err.message)
+            log.error(err.message)
             session.send(err.message)
             session.close()
             return
         }
+        sessions.saveSession(session.id+':'+session.user.clientId,session)
         session.on('message', function (message) {
             onmessage(message,session)
 
