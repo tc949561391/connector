@@ -4,8 +4,11 @@
  * Module dependencies.
  */
 var WebsocketServer = require('ws').Server
+var server = require('http').createServer()
 var socket = require('../socket')
 var config = require('../config')
+var cluster = require('cluster');
+var numCPUs = require('os').cpus().length;
 
 
 //日志模块的配置
@@ -19,7 +22,7 @@ log4js.configure({
             maxLogSize: 1024,
             backups: 3,
             category: 'normal',
-            layout: {type:'basic'},
+            layout: {type: 'basic'},
             pattern: '.yyyy-MM-dd',
             alwaysIncludePattern: true
         }
@@ -30,16 +33,25 @@ log4js.configure({
 });
 
 
-
-
 var log = log4js.getLogger('server-init')
 
 var wss = new WebsocketServer({
-    port: config.server.port || 3000
+    server:server
 })
-socket.conn(wss)
-log.info('websocket server is booting at ' + config.server.port || 3000 + 'port')
 
+
+if (cluster.isMaster) {
+    // Fork workers.
+    for (var i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+} else {
+    server.listen(80,function () {
+        log.info('boot at port:'+80)
+    })
+}
+
+socket.conn(wss)
 
 //获取node运行服务器的内网hostname和ip地址
 var os = require('os');

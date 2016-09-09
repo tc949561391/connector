@@ -1,5 +1,5 @@
 /**
- * Created by j0 on 2016/9/2.
+ * Created by Tristan on 2016/9/2.
  */
 var util = require('util')
 var redis = require('../../models/redis')
@@ -30,9 +30,9 @@ function getAccessToken(bearerToken, callback) {
 exports.getAccessToken = getAccessToken
 
 function getUser(access_token, callback) {
-    if (access_token == '123456789') {
+    if (access_token.startsWith('test')) {
         var user = {
-            id: 123456,
+            id: access_token,
             clientId: 'client_id',
             joinTime: Date.now(),
             host: process.address.host

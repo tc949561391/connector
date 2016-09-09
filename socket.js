@@ -1,9 +1,11 @@
 /**
- * Created by j0 on 2016/9/2.
+ * 系统初始化
+ * Created by Tristan on 2016/9/2.
  */
 var doConnection = require('./core/connection')
 var log = require('log4js').getLogger('server-runtime')
 function coreConnection(wss) {
+
     wss.on('connection', function (session) {
         doConnection(session)
     })
